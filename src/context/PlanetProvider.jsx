@@ -45,7 +45,7 @@ function PlanetProvider({ children }) {
             value,
           },
         ],
-      });
+      }); // teste
     }
   }, [inputNumeric]);
 
