@@ -13,6 +13,7 @@ function PlanetProvider({ children }) {
     },
     filterByNumericValues: [],
   });
+  const [deleteFilter, setDeleteFilter] = useState();
 
   // componentDidMount - faz requisicao api
   useEffect(() => {
@@ -48,6 +49,26 @@ function PlanetProvider({ children }) {
     }
   }, [inputNumeric]);
 
+  // componentDidUpdate - deleta Filtros
+  useEffect(() => {
+    const { filterByNumericValues } = filters;
+
+    if (filterByNumericValues) {
+      const filter = filterByNumericValues.filter((_item, index) => (
+        index !== deleteFilter + 1
+      ));
+      setFilters({
+        ...filters,
+        filterByNumericValues: [
+          ...filterByNumericValues,
+          filter,
+        ],
+      });
+      console.log(filterByNumericValues);
+    }
+
+  }, [deleteFilter]);
+
   const contextValue = {
     data,
     setData,
@@ -57,6 +78,8 @@ function PlanetProvider({ children }) {
     setInputNumeric,
     filters,
     setFilters,
+    deleteFilter,
+    setDeleteFilter,
   };
 
   return (
