@@ -10,7 +10,7 @@ function App() {
   return (
     <PlanetProvider>
       <Header />
-      {/* <Inputs /> */}
+      <Inputs />
       {/* <Filter /> */}
       <Table />
     </PlanetProvider>

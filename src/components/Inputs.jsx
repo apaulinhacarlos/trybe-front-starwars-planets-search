@@ -4,7 +4,7 @@ import FilterByNumericValues from './FilterByNumericValues';
 
 function Inputs() {
   return (
-    <div>
+    <div className="div-form">
       <FilterByName />
       <FilterByNumericValues />
     </div>

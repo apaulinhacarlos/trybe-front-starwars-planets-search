@@ -21,9 +21,10 @@ function PlanetProvider({ children }) {
 
   const [data, setData] = useState();
   const [dataHeader, setDataHeader] = useState();
+  const [inputName, setInputName] = useState();
   const [filters, setFilters] = useState(initialState);
 
-  // const [inputName, setInputName] = useState();
+
   // const [inputNumeric, setInputNumeric] = useState();
   // const [filters, setFilters] = useState({
   //   filterByName: {
@@ -33,7 +34,6 @@ function PlanetProvider({ children }) {
   // });
   // const [deleteFilter, setDeleteFilter] = useState();
 
-  // componentDidMount - faz requisicao api
   useEffect(() => {
     const getPlanetsApi = async () => {
       const result = await fetchPlanetsApi();
@@ -43,22 +43,25 @@ function PlanetProvider({ children }) {
     getPlanetsApi();
   }, []);
 
-  // componentDidUpdate - faz filtro por nome
   useEffect(() => {
-    const getPlanets = async () => {
-      const result = await fetchPlanetsApi();
-      const { filters: { filterByName: { name } } } = filters;
-      if (name) {
-        const nameLowerCase = name.toLowerCase();
-        const filterResult = result.filter((item) => (
-          (item.name.toLowerCase()).includes(nameLowerCase)
-        ));
-        setData(filterResult);
-      }
-      if (name === '') setData(result);
+    const saveFilterByName = async () => {
+      setFilters({
+        filters: {
+          filterByName: {
+            name: inputName,
+          },
+          filterByNumericValues: [
+            {
+              column: 'population',
+              comparison: 'maior que',
+              value: '100000',
+            },
+          ],
+        },
+      });
     };
-    getPlanets();
-  }, [filters]);
+    saveFilterByName();
+  }, [inputName]);
 
   // componentDidUpdate - faz filtro por numeros
   // useEffect(() => {
@@ -105,6 +108,8 @@ function PlanetProvider({ children }) {
     setData,
     dataHeader,
     setDataHeader,
+    inputName,
+    setInputName,
     filters,
     setFilters,
     // inputName,
