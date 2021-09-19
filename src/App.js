@@ -4,12 +4,14 @@ import Table from './components/Table';
 import Inputs from './components/Inputs';
 import PlanetProvider from './context/PlanetProvider';
 import Filter from './components/Fillter';
+import Header from './components/Header';
 
 function App() {
   return (
     <PlanetProvider>
-      <Inputs />
-      <Filter />
+      <Header />
+      {/* <Inputs /> */}
+      {/* <Filter /> */}
       <Table />
     </PlanetProvider>
   );

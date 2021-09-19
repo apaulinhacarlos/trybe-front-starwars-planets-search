@@ -4,21 +4,40 @@ import PlanetContext from './PlanetContext';
 import fetchPlanetsApi from '../services/fetchPlanetsApi';
 
 function PlanetProvider({ children }) {
-  const [data, setData] = useState();
-  const [inputName, setInputName] = useState();
-  const [inputNumeric, setInputNumeric] = useState();
-  const [filters, setFilters] = useState({
-    filterByName: {
-      name: '',
+  const initialState = {
+    filters: {
+      filterByName: {
+        name: '',
+      },
+      filterByNumericValues: [
+        {
+          column: 'population',
+          comparison: 'maior que',
+          value: '100000',
+        },
+      ],
     },
-    filterByNumericValues: [],
-  });
-  const [deleteFilter, setDeleteFilter] = useState();
+  };
+
+  const [data, setData] = useState();
+  const [dataHeader, setDataHeader] = useState();
+  const [filters, setFilters] = useState(initialState);
+
+  // const [inputName, setInputName] = useState();
+  // const [inputNumeric, setInputNumeric] = useState();
+  // const [filters, setFilters] = useState({
+  //   filterByName: {
+  //     name: '',
+  //   },
+  //   filterByNumericValues: [],
+  // });
+  // const [deleteFilter, setDeleteFilter] = useState();
 
   // componentDidMount - faz requisicao api
   useEffect(() => {
     const getPlanetsApi = async () => {
       const result = await fetchPlanetsApi();
+      setDataHeader(result);
       setData(result);
     };
     getPlanetsApi();
@@ -26,60 +45,76 @@ function PlanetProvider({ children }) {
 
   // componentDidUpdate - faz filtro por nome
   useEffect(() => {
-    setFilters({ ...filters, filterByName: { name: inputName } });
-  }, [inputName]);
+    const getPlanets = async () => {
+      const result = await fetchPlanetsApi();
+      const { filters: { filterByName: { name } } } = filters;
+      if (name) {
+        const nameLowerCase = name.toLowerCase();
+        const filterResult = result.filter((item) => (
+          (item.name.toLowerCase()).includes(nameLowerCase)
+        ));
+        setData(filterResult);
+      }
+      if (name === '') setData(result);
+    };
+    getPlanets();
+  }, [filters]);
 
   // componentDidUpdate - faz filtro por numeros
-  useEffect(() => {
-    if (data) {
-      const { column, comparison, value } = inputNumeric;
-      const { filterByNumericValues } = filters;
+  // useEffect(() => {
+  //   if (data) {
+  //     const { column, comparison, value } = inputNumeric;
+  //     const { filterByNumericValues } = filters;
 
-      setFilters({
-        ...filters,
-        filterByNumericValues: [
-          ...filterByNumericValues,
-          {
-            column,
-            comparison,
-            value,
-          },
-        ],
-      }); // teste
-    }
-  }, [inputNumeric]);
+  //     setFilters({
+  //       ...filters,
+  //       filterByNumericValues: [
+  //         ...filterByNumericValues,
+  //         {
+  //           column,
+  //           comparison,
+  //           value,
+  //         },
+  //       ],
+  //     }); // teste
+  //   }
+  // }, [inputNumeric]);
 
   // componentDidUpdate - deleta Filtros
-  useEffect(() => {
-    const { filterByNumericValues } = filters;
+  // useEffect(() => {
+  //   const { filterByNumericValues } = filters;
 
-    if (filterByNumericValues) {
-      const filter = filterByNumericValues.filter((_item, index) => (
-        index !== deleteFilter + 1
-      ));
-      setFilters({
-        ...filters,
-        filterByNumericValues: [
-          ...filterByNumericValues,
-          filter,
-        ],
-      });
-      console.log(filterByNumericValues);
-    }
+  //   if (filterByNumericValues) {
+  //     const filter = filterByNumericValues.filter((_item, index) => (
+  //       index !== deleteFilter + 1
+  //     ));
+  //     setFilters({
+  //       ...filters,
+  //       filterByNumericValues: [
+  //         ...filterByNumericValues,
+  //         filter,
+  //       ],
+  //     });
+  //     console.log(filterByNumericValues);
+  //   }
 
-  }, [deleteFilter]);
+  // }, [deleteFilter]);
 
   const contextValue = {
     data,
     setData,
-    inputName,
-    setInputName,
-    inputNumeric,
-    setInputNumeric,
+    dataHeader,
+    setDataHeader,
     filters,
     setFilters,
-    deleteFilter,
-    setDeleteFilter,
+    // inputName,
+    // setInputName,
+    // inputNumeric,
+    // setInputNumeric,
+    // filters,
+    // setFilters,
+    // deleteFilter,
+    // setDeleteFilter,
   };
 
   return (
