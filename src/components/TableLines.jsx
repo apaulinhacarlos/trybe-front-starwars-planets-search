@@ -5,7 +5,7 @@ import Lines from './Lines';
 function TableLines() {
   // const { data } = useContext(PlanetContext);
 
-  const { data, inputName /*, inputNumeric*/ } = useContext(PlanetContext);
+  const { data, inputName, inputNumeric } = useContext(PlanetContext);
 
   const tableFilter = () => {
     if (inputName) {
@@ -18,15 +18,18 @@ function TableLines() {
       return line;
     }
 
-    // if (inputNumeric) {
-    //   const { column, comparison, value } = inputNumeric;
-    //   const dataFilterByNumber = data.filter((item) => {
-    //     if (comparison === 'maior que') return item[column] > +value;
-    //     if (comparison === 'menor que') return item[column] < +value;
-    //     return item[column] === value;
-    //   });
-    //   return <TableData data={ dataFilterByNumber } />;
-    // }
+    if (inputNumeric) {
+      const { column, comparison, value } = inputNumeric;
+      const dataFilterByNumber = data.filter((item) => {
+        if (comparison === 'maior que') return item[column] > +value;
+        if (comparison === 'menor que') return item[column] < +value;
+        return item[column] === value;
+      });
+      const line = dataFilterByNumber.map((item) => (
+        <Lines key={ item.name } item={ item } />
+      ));
+      return line;
+    }
 
     const line = data.map((item) => (
       <Lines key={ item.name } item={ item } />

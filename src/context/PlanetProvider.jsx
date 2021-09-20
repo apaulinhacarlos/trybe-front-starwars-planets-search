@@ -49,7 +49,6 @@ function PlanetProvider({ children }) {
         },
       });
     };
-    console.log(inputNumeric);
     saveFilterByName();
   }, [inputName, inputNumeric]);
 
