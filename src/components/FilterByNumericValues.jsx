@@ -2,10 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function FilterByNumericValues() {
-  const { setInputNumeric, filters } = useContext(PlanetContext);
+  const { setInputNumeric } = useContext(PlanetContext);
 
-  const [stateLocal, setStateLocal] = useState();
-  const [selectColumn, setSelectColumn] = useState(
+  const [columnFilter, setColumnFilter] = useState(
     [
       'population',
       'orbital_period',
@@ -14,6 +13,28 @@ function FilterByNumericValues() {
       'surface_water',
     ],
   );
+
+  const [stateLocal, setStateLocal] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: '100000',
+  });
+
+  useEffect(() => {
+    const changeColumn = async () => {
+      setStateLocal((previousState) => ({
+        ...previousState,
+        column: columnFilter[0],
+      }));
+    };
+    changeColumn();
+  }, [columnFilter]);
+
+  const comparisonFilter = [
+    'maior que',
+    'menor que',
+    'igual a',
+  ];
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -25,72 +46,60 @@ function FilterByNumericValues() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const { column = 'population', comparison = 'maior que', value = 0 } = stateLocal;
-    setInputNumeric({
-      column,
-      comparison,
-      value,
-    });
+    const columnFilterDelete = columnFilter.filter((item) => item !== stateLocal.column);
+    setColumnFilter(columnFilterDelete);
+    setInputNumeric(stateLocal);
   };
-
-  const renderSelectColumn = () => {
-    if (stateLocal) {
-      const { column } = stateLocal;
-      const optionsFilter = selectColumn.filter((item) => item !== column);
-      setSelectColumn(optionsFilter);
-    }
-  };
-
-  // componentDidUpdate - oculta column selecionada
-  useEffect(() => {
-    const render = async () => renderSelectColumn();
-    render();
-  }, [filters]);
 
   return (
     <div>
-      <form onSubmit={ handleSubmit }>
-        <label htmlFor="input-numbers">
+      <form>
+        <label
+          htmlFor="input-numbers"
+          className="div-form"
+        >
           Pesquisar Planeta por Números:
-          <label htmlFor="input-numbers">
-            Selecione o seu filtro:
-            <select
-              name="column"
-              data-testid="column-filter"
-              onChange={ handleChange }
-              defaultValue="population"
-              id="input-numbers"
-            >
-              { selectColumn.map((item) => (
-                <option value={ item } key={ item }>{item}</option>
-              ))}
-            </select>
-          </label>
+
+          <select
+            name="column"
+            id="input-numbers"
+            onChange={ handleChange }
+            data-testid="column-filter"
+            className="div-form form-select"
+          >
+            { columnFilter.map((item) => (
+              <option value={ item } key={ item }>{ item }</option>
+            ))}
+          </select>
+
           <select
             name="comparison"
-            data-testid="comparison-filter"
             onChange={ handleChange }
-            defaultValue="maior que"
+            data-testid="comparison-filter"
+            className="div-form form-select"
           >
-            <option value="maior que">maior que</option>
-            <option value="menor que">menor que</option>
-            <option value="igual a">igual a</option>
+            { comparisonFilter.map((item) => (
+              <option value={ item } key={ item }>{ item }</option>
+            ))}
           </select>
+
           <input
             type="number"
             name="value"
-            data-testid="value-filter"
             onChange={ handleChange }
+            data-testid="value-filter"
+            className="div-form form-control"
           />
+
+          <button
+            type="button"
+            data-testid="button-filter"
+            onClick={ handleSubmit }
+            className="div-form btn btn-primary"
+          >
+            Adicionar Filtro
+          </button>
         </label>
-        <button
-          type="submit"
-          data-testid="button-filter"
-          onClick={ handleSubmit }
-        >
-          Enviar
-        </button>
       </form>
     </div>
   );

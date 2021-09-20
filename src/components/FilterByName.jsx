@@ -8,22 +8,12 @@ function FilterByName() {
     setInputName(value);
   };
 
-  // const { filters, setFilters } = useContext(PlanetContext);
-
-  // const handleChange = ({ target: { value } }) => {
-  //   setFilters({
-  //     ...filters,
-  //     filters: {
-  //       filterByName: {
-  //         name: value,
-  //       },
-  //     },
-  //   });
-  // };
-
   return (
     <form className="div-form">
-      <label htmlFor="input-filter-by-name">
+      <label
+        htmlFor="input-filter-by-name"
+        className="div-form"
+      >
         Pesquisar Planeta por Nome:
         <input
           type="text"
@@ -31,7 +21,7 @@ function FilterByName() {
           id="input-filter-by-name"
           onChange={ handleChange }
           data-testid="name-filter"
-          className="form-control"
+          className="div-form form-control"
         />
       </label>
     </form>

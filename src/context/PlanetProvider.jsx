@@ -21,17 +21,10 @@ function PlanetProvider({ children }) {
 
   const [data, setData] = useState();
   const [dataHeader, setDataHeader] = useState();
-  const [inputName, setInputName] = useState();
   const [filters, setFilters] = useState(initialState);
+  const [inputName, setInputName] = useState();
+  const [inputNumeric, setInputNumeric] = useState();
 
-
-  // const [inputNumeric, setInputNumeric] = useState();
-  // const [filters, setFilters] = useState({
-  //   filterByName: {
-  //     name: '',
-  //   },
-  //   filterByNumericValues: [],
-  // });
   // const [deleteFilter, setDeleteFilter] = useState();
 
   useEffect(() => {
@@ -51,37 +44,14 @@ function PlanetProvider({ children }) {
             name: inputName,
           },
           filterByNumericValues: [
-            {
-              column: 'population',
-              comparison: 'maior que',
-              value: '100000',
-            },
+            inputNumeric,
           ],
         },
       });
     };
+    console.log(inputNumeric);
     saveFilterByName();
-  }, [inputName]);
-
-  // componentDidUpdate - faz filtro por numeros
-  // useEffect(() => {
-  //   if (data) {
-  //     const { column, comparison, value } = inputNumeric;
-  //     const { filterByNumericValues } = filters;
-
-  //     setFilters({
-  //       ...filters,
-  //       filterByNumericValues: [
-  //         ...filterByNumericValues,
-  //         {
-  //           column,
-  //           comparison,
-  //           value,
-  //         },
-  //       ],
-  //     }); // teste
-  //   }
-  // }, [inputNumeric]);
+  }, [inputName, inputNumeric]);
 
   // componentDidUpdate - deleta Filtros
   // useEffect(() => {
@@ -108,16 +78,12 @@ function PlanetProvider({ children }) {
     setData,
     dataHeader,
     setDataHeader,
-    inputName,
-    setInputName,
     filters,
     setFilters,
-    // inputName,
-    // setInputName,
-    // inputNumeric,
-    // setInputNumeric,
-    // filters,
-    // setFilters,
+    inputName,
+    setInputName,
+    inputNumeric,
+    setInputNumeric,
     // deleteFilter,
     // setDeleteFilter,
   };
