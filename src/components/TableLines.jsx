@@ -3,8 +3,6 @@ import PlanetContext from '../context/PlanetContext';
 import Lines from './Lines';
 
 function TableLines() {
-  // const { data } = useContext(PlanetContext);
-
   const { data, inputName, inputNumeric } = useContext(PlanetContext);
 
   const tableFilter = () => {

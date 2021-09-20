@@ -9,13 +9,7 @@ function PlanetProvider({ children }) {
       filterByName: {
         name: '',
       },
-      filterByNumericValues: [
-        {
-          column: 'population',
-          comparison: 'maior que',
-          value: '100000',
-        },
-      ],
+      filterByNumericValues: [],
     },
   };
 
@@ -23,9 +17,9 @@ function PlanetProvider({ children }) {
   const [dataHeader, setDataHeader] = useState();
   const [filters, setFilters] = useState(initialState);
   const [inputName, setInputName] = useState();
-  const [inputNumeric, setInputNumeric] = useState();
+  const [inputNumeric, setInputNumeric] = useState([]);
 
-  // const [deleteFilter, setDeleteFilter] = useState();
+  const [deleteFilter, setDeleteFilter] = useState();
 
   useEffect(() => {
     const getPlanetsApi = async () => {
@@ -83,8 +77,8 @@ function PlanetProvider({ children }) {
     setInputName,
     inputNumeric,
     setInputNumeric,
-    // deleteFilter,
-    // setDeleteFilter,
+    deleteFilter,
+    setDeleteFilter,
   };
 
   return (

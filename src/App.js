@@ -11,7 +11,7 @@ function App() {
     <PlanetProvider>
       <Header />
       <Inputs />
-      {/* <Filter /> */}
+      <Filter />
       <Table />
     </PlanetProvider>
   );
