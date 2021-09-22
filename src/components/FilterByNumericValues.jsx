@@ -48,12 +48,13 @@ function FilterByNumericValues() {
     e.preventDefault();
     const columnFilterDelete = columnFilter.filter((item) => item !== stateLocal.column);
     setColumnFilter(columnFilterDelete);
+    if (columnFilter.length === 0) alert('Não existem mais filtros disponíveis');
     setInputNumeric(stateLocal);
   };
 
   return (
     <div>
-      <form>
+      <form onSubmit={ handleSubmit }>
         <label
           htmlFor="input-numbers"
           className="div-form"
@@ -92,7 +93,7 @@ function FilterByNumericValues() {
           />
 
           <button
-            type="button"
+            type="submit"
             data-testid="button-filter"
             onClick={ handleSubmit }
             className="div-form btn btn-primary"

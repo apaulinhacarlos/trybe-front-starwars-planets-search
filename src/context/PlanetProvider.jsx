@@ -17,7 +17,7 @@ function PlanetProvider({ children }) {
   const [dataHeader, setDataHeader] = useState();
   const [filters, setFilters] = useState(initialState);
   const [inputName, setInputName] = useState();
-  const [inputNumeric, setInputNumeric] = useState([]);
+  const [inputNumeric, setInputNumeric] = useState({});
 
   const [deleteFilter, setDeleteFilter] = useState();
 

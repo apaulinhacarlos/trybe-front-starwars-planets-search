@@ -37,7 +37,7 @@ function TableLines() {
 
   return (
     <tbody>
-      { data ? tableFilter() : null }
+      { data ? tableFilter() : <p>Carregando...</p> }
     </tbody>
   );
 }

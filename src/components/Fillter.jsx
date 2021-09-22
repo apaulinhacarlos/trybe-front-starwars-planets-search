@@ -26,18 +26,20 @@ function Filter() {
     // return map;
     // console.log(inputNumeric);
     const { column, comparison, value } = inputNumeric;
-    return (
-      <div>
-        <span>{`${column}, ${comparison}, ${value}`}</span>
-        <button
-          onClick={ () => handleClick(0) }
-          type="button"
-          className="div-form btn btn-primary"
-        >
-          X
-        </button>
-      </div>
-    );
+    if (inputNumeric) {
+      return (
+        <div>
+          <span>{`${column}, ${comparison}, ${value}`}</span>
+          <button
+            onClick={ () => handleClick(0) }
+            type="button"
+            className="div-form btn btn-primary"
+          >
+            X
+          </button>
+        </div>
+      );
+    }
   };
 
   return (
