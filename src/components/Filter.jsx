@@ -6,12 +6,20 @@ function Filter() {
     filters,
     filters: { filterByNumericValues },
     setFilters,
+    columnFilter,
+    setColumnFilter,
   } = useContext(PlanetContext);
 
   const handleClick = (indexToDel) => {
-    const filterDelete = filterByNumericValues.filter((_item, index) => (
+    const filterDelete = filterByNumericValues.filter((item, index) => (
       index !== indexToDel
     ));
+
+    setColumnFilter([
+      ...columnFilter,
+      filterByNumericValues[indexToDel].column,
+    ]);
+
     setFilters({
       ...filters,
       filterByNumericValues: filterDelete,
@@ -40,7 +48,10 @@ function Filter() {
 
   return (
     <div>
-      { filterByNumericValues.length > 0 ? showFilter() : null}
+      { filterByNumericValues.length > 0 ? showFilter() : null }
+      { columnFilter.length === 0
+        ? <span>Não existem mais filtros disponíveis</span>
+        : null }
     </div>
   );
 }

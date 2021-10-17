@@ -5,15 +5,18 @@ import Lines from './Lines';
 function TableLines() {
   const {
     data,
-    filters: { filterByName, filterByNumericValues },
+    filters: {
+      filterByName: { name },
+      filterByNumericValues,
+    },
   } = useContext(PlanetContext);
 
   const tableFilter = () => {
-    if (filterByName || filterByNumericValues.length > 0) {
+    if (name || filterByNumericValues.length > 0) {
       let dataFiltered = [...data];
 
       dataFiltered = data
-        .filter((item) => item.name.toLowerCase().includes(filterByName.toLowerCase()));
+        .filter((item) => item.name.toLowerCase().includes(name.toLowerCase()));
 
       filterByNumericValues.forEach(({ column, comparison, value }) => {
         if (comparison === 'maior que') {
@@ -21,7 +24,7 @@ function TableLines() {
         } else if (comparison === 'menor que') {
           dataFiltered = dataFiltered.filter((item) => item[column] < +value);
         } else if (comparison === 'igual a') {
-          dataFiltered = dataFiltered.filter((item) => item[column] === +value);
+          dataFiltered = dataFiltered.filter((item) => item[column] === value);
         }
       });
 

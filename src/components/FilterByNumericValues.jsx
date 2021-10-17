@@ -6,19 +6,21 @@ function FilterByNumericValues() {
     filters,
     filters: { filterByNumericValues },
     setFilters,
+    columnFilter,
+    setColumnFilter,
   } = useContext(PlanetContext);
 
-  const [columnFilter, setColumnFilter] = useState(
-    [
-      'population',
-      'orbital_period',
-      'diameter',
-      'rotation_period',
-      'surface_water',
-    ],
-  );
+  // const [columnFilter, setColumnFilter] = useState(
+  //   [
+  //     'population',
+  //     'orbital_period',
+  //     'diameter',
+  //     'rotation_period',
+  //     'surface_water',
+  //   ],
+  // );
 
-  const [stateLocal, setStateLocal] = useState({
+  const [filterByNumericValuesLocal, setFilterByNumericValuesLocal] = useState({
     column: 'population',
     comparison: 'maior que',
     value: '0',
@@ -26,7 +28,7 @@ function FilterByNumericValues() {
 
   useEffect(() => {
     const changeColumn = async () => {
-      setStateLocal((previousState) => ({
+      setFilterByNumericValuesLocal((previousState) => ({
         ...previousState,
         column: columnFilter[0],
       }));
@@ -42,22 +44,23 @@ function FilterByNumericValues() {
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    setStateLocal({
-      ...stateLocal,
+    setFilterByNumericValuesLocal({
+      ...filterByNumericValuesLocal,
       [name]: value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const columnFilterDelete = columnFilter.filter((item) => item !== stateLocal.column);
+    const columnFilterDelete = columnFilter
+      .filter((item) => item !== filterByNumericValuesLocal.column);
     setColumnFilter(columnFilterDelete);
-    if (columnFilter.length === 0) alert('Não existem mais filtros disponíveis');
+
     setFilters({
       ...filters,
       filterByNumericValues: [
         ...filterByNumericValues,
-        stateLocal,
+        filterByNumericValuesLocal,
       ],
     });
   };

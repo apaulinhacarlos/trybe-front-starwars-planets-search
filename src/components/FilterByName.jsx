@@ -7,7 +7,9 @@ function FilterByName() {
   const handleChange = ({ target: { value } }) => {
     setFilters({
       ...filters,
-      filterByName: value,
+      filterByName: {
+        name: value,
+      },
     });
   };
 

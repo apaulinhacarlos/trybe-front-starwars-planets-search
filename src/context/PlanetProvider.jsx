@@ -6,18 +6,27 @@ import fetchPlanetsApi from '../services/fetchPlanetsApi';
 function PlanetProvider({ children }) {
   const [data, setData] = useState();
   const [dataHeader, setDataHeader] = useState();
-  const [dataFiltered, setDataFiltered] = useState();
   const [filters, setFilters] = useState({
-    filterByName: '',
+    filterByName: {
+      name: '',
+    },
     filterByNumericValues: [],
   });
+  const [columnFilter, setColumnFilter] = useState(
+    [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ],
+  );
 
   useEffect(() => {
     const getPlanetsApi = async () => {
       const result = await fetchPlanetsApi();
       setData(result);
       setDataHeader(result);
-      setDataFiltered(result);
     };
     getPlanetsApi();
   }, []);
@@ -29,8 +38,8 @@ function PlanetProvider({ children }) {
     setDataHeader,
     filters,
     setFilters,
-    dataFiltered,
-    setDataFiltered,
+    columnFilter,
+    setColumnFilter,
   };
 
   return (
