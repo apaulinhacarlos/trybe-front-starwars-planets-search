@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function FilterByNumericValues() {
-  const { setInputNumeric } = useContext(PlanetContext);
+  const { filters, setFilters } = useContext(PlanetContext);
 
   const [columnFilter, setColumnFilter] = useState(
     [
@@ -17,7 +17,7 @@ function FilterByNumericValues() {
   const [stateLocal, setStateLocal] = useState({
     column: 'population',
     comparison: 'maior que',
-    value: '100000',
+    value: '0',
   });
 
   useEffect(() => {
@@ -38,10 +38,10 @@ function FilterByNumericValues() {
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    setStateLocal((previousState) => ({
-      ...previousState,
+    setStateLocal({
+      ...stateLocal,
       [name]: value,
-    }));
+    });
   };
 
   const handleSubmit = (e) => {
@@ -49,7 +49,14 @@ function FilterByNumericValues() {
     const columnFilterDelete = columnFilter.filter((item) => item !== stateLocal.column);
     setColumnFilter(columnFilterDelete);
     if (columnFilter.length === 0) alert('Não existem mais filtros disponíveis');
-    setInputNumeric(stateLocal);
+    const { filterByNumericValues } = filters;
+    setFilters({
+      ...filters,
+      filterByNumericValues: [
+        ...filterByNumericValues,
+        stateLocal,
+      ],
+    });
   };
 
   return (

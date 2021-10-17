@@ -4,20 +4,14 @@ import PlanetContext from './PlanetContext';
 import fetchPlanetsApi from '../services/fetchPlanetsApi';
 
 function PlanetProvider({ children }) {
-  const initialState = {
-    filters: {
-      filterByName: {
-        name: '',
-      },
-      filterByNumericValues: [],
-    },
-  };
-
   const [data, setData] = useState();
   const [dataHeader, setDataHeader] = useState();
-  const [filters, setFilters] = useState(initialState);
+  const [filters, setFilters] = useState({
+    filterByName: '',
+    filterByNumericValues: [],
+  });
   const [inputName, setInputName] = useState();
-  const [inputNumeric, setInputNumeric] = useState({});
+  const [inputNumeric, setInputNumeric] = useState();
 
   const [deleteFilter, setDeleteFilter] = useState();
 
@@ -29,22 +23,6 @@ function PlanetProvider({ children }) {
     };
     getPlanetsApi();
   }, []);
-
-  useEffect(() => {
-    const saveFilterByName = async () => {
-      setFilters({
-        filters: {
-          filterByName: {
-            name: inputName,
-          },
-          filterByNumericValues: [
-            inputNumeric,
-          ],
-        },
-      });
-    };
-    saveFilterByName();
-  }, [inputName, inputNumeric]);
 
   // componentDidUpdate - deleta Filtros
   // useEffect(() => {

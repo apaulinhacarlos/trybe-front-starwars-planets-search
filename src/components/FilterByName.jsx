@@ -2,10 +2,13 @@ import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function FilterByName() {
-  const { setInputName } = useContext(PlanetContext);
+  const { filters, setFilters } = useContext(PlanetContext);
 
   const handleChange = ({ target: { value } }) => {
-    setInputName(value);
+    setFilters({
+      ...filters,
+      filterByName: value,
+    });
   };
 
   return (
