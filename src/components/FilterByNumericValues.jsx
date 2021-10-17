@@ -2,7 +2,11 @@ import React, { useState, useContext, useEffect } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function FilterByNumericValues() {
-  const { filters, setFilters } = useContext(PlanetContext);
+  const {
+    filters,
+    filters: { filterByNumericValues },
+    setFilters,
+  } = useContext(PlanetContext);
 
   const [columnFilter, setColumnFilter] = useState(
     [
@@ -49,7 +53,6 @@ function FilterByNumericValues() {
     const columnFilterDelete = columnFilter.filter((item) => item !== stateLocal.column);
     setColumnFilter(columnFilterDelete);
     if (columnFilter.length === 0) alert('Não existem mais filtros disponíveis');
-    const { filterByNumericValues } = filters;
     setFilters({
       ...filters,
       filterByNumericValues: [

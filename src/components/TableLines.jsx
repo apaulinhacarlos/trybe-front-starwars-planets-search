@@ -9,31 +9,24 @@ function TableLines() {
   } = useContext(PlanetContext);
 
   const tableFilter = () => {
-    if (filterByName) {
-      const dataFilterByName = data.filter((item) => (
-        (item.name.toLowerCase()).includes(filterByName.toLowerCase())
-      ));
-      const line = dataFilterByName.map((item) => (
+    if (filterByName || filterByNumericValues.length > 0) {
+      let dataFiltered = [...data];
+
+      dataFiltered = data
+        .filter((item) => item.name.toLowerCase().includes(filterByName.toLowerCase()));
+
+      filterByNumericValues.forEach(({ column, comparison, value }) => {
+        if (comparison === 'maior que') {
+          dataFiltered = dataFiltered.filter((item) => item[column] > +value);
+        } else if (comparison === 'menor que') {
+          dataFiltered = dataFiltered.filter((item) => item[column] < +value);
+        } else if (comparison === 'igual a') {
+          dataFiltered = dataFiltered.filter((item) => item[column] === +value);
+        }
+      });
+
+      const line = dataFiltered.map((item) => (
         <Lines key={ item.name } item={ item } />
-      ));
-      return line;
-    }
-
-    if (filterByNumericValues.length > 0) {
-      const dataFilterByNumber = filterByNumericValues
-        .map(({ column, comparison, value }) => (
-          data.filter((item) => {
-            if (comparison === 'maior que') return item[column] > +value;
-            if (comparison === 'menor que') return item[column] < +value;
-            return item[column] === value;
-          })
-        ));
-
-      const line = dataFilterByNumber.map((itens) => (
-        itens.map((item) => {
-          console.log(item);
-          return <Lines key={ item.name } item={ item } />;
-        })
       ));
       return line;
     }

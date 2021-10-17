@@ -6,43 +6,21 @@ import fetchPlanetsApi from '../services/fetchPlanetsApi';
 function PlanetProvider({ children }) {
   const [data, setData] = useState();
   const [dataHeader, setDataHeader] = useState();
+  const [dataFiltered, setDataFiltered] = useState();
   const [filters, setFilters] = useState({
     filterByName: '',
     filterByNumericValues: [],
   });
-  const [inputName, setInputName] = useState();
-  const [inputNumeric, setInputNumeric] = useState();
-
-  const [deleteFilter, setDeleteFilter] = useState();
 
   useEffect(() => {
     const getPlanetsApi = async () => {
       const result = await fetchPlanetsApi();
-      setDataHeader(result);
       setData(result);
+      setDataHeader(result);
+      setDataFiltered(result);
     };
     getPlanetsApi();
   }, []);
-
-  // componentDidUpdate - deleta Filtros
-  // useEffect(() => {
-  //   const { filterByNumericValues } = filters;
-
-  //   if (filterByNumericValues) {
-  //     const filter = filterByNumericValues.filter((_item, index) => (
-  //       index !== deleteFilter + 1
-  //     ));
-  //     setFilters({
-  //       ...filters,
-  //       filterByNumericValues: [
-  //         ...filterByNumericValues,
-  //         filter,
-  //       ],
-  //     });
-  //     console.log(filterByNumericValues);
-  //   }
-
-  // }, [deleteFilter]);
 
   const contextValue = {
     data,
@@ -51,12 +29,8 @@ function PlanetProvider({ children }) {
     setDataHeader,
     filters,
     setFilters,
-    inputName,
-    setInputName,
-    inputNumeric,
-    setInputNumeric,
-    deleteFilter,
-    setDeleteFilter,
+    dataFiltered,
+    setDataFiltered,
   };
 
   return (
