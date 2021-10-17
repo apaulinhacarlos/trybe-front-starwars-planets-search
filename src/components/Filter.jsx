@@ -32,7 +32,11 @@ function Filter() {
       const newFilter = filterByNumericValues
         .map(({ column, comparison, value }, index) => (
           <div key={ index } data-testid="filter">
-            <span>{`${column}, ${comparison}, ${value}`}</span>
+            <span
+              className="div-form btn "
+            >
+              {`${column}, ${comparison}, ${value}`}
+            </span>
             <button
               onClick={ () => handleClick(index) }
               type="button"
@@ -50,7 +54,7 @@ function Filter() {
     <div>
       { filterByNumericValues.length > 0 ? showFilter() : null }
       { columnFilter.length === 0
-        ? <span>Não existem mais filtros disponíveis</span>
+        ? <p className="alert">Não existem mais filtros disponíveis</p>
         : null }
     </div>
   );

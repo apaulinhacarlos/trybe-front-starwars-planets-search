@@ -10,16 +10,6 @@ function FilterByNumericValues() {
     setColumnFilter,
   } = useContext(PlanetContext);
 
-  // const [columnFilter, setColumnFilter] = useState(
-  //   [
-  //     'population',
-  //     'orbital_period',
-  //     'diameter',
-  //     'rotation_period',
-  //     'surface_water',
-  //   ],
-  // );
-
   const [filterByNumericValuesLocal, setFilterByNumericValuesLocal] = useState({
     column: 'population',
     comparison: 'maior que',

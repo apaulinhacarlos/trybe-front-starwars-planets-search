@@ -11,3 +11,9 @@ body {
 .btn {
   margin-bottom: 10px;
 }
+
+.alert {
+  background-color: red;
+  color: white;
+  margin: 10px;
+}
