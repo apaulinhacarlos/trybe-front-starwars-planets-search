@@ -11,7 +11,10 @@ function PlanetProvider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
-    order: {},
+    order: {
+      column: 'name',
+      sort: 'ASC',
+    },
   });
   const [columnFilter, setColumnFilter] = useState(
     [

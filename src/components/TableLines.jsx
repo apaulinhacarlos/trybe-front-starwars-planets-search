@@ -8,11 +8,12 @@ function TableLines() {
     filters: {
       filterByName: { name },
       filterByNumericValues,
+      order,
     },
   } = useContext(PlanetContext);
 
   const tableFilter = () => {
-    if (name || filterByNumericValues.length > 0) {
+    if (name || filterByNumericValues.length > 0 || order) {
       let dataFiltered = [...data];
 
       dataFiltered = data
@@ -27,6 +28,17 @@ function TableLines() {
           dataFiltered = dataFiltered.filter((item) => item[column] === value);
         }
       });
+
+      if (order.sort === 'ASC') {
+        dataFiltered
+          .sort((prev, next) => prev[order.column].localeCompare(next[order.column]))
+          .sort((prev, next) => prev[order.column] - next[order.column]);
+      }
+
+      if (order.sort === 'DESC') {
+        dataFiltered
+          .sort((prev, next) => next[order.column] - prev[order.column]);
+      }
 
       const line = dataFiltered.map((item) => (
         <Lines key={ item.name } item={ item } />

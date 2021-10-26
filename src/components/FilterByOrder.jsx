@@ -2,16 +2,11 @@ import React, { useState, useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
 
 function FilterByOrder() {
-  const {
-    filters,
-    // filters: { order },
-    setFilters,
-    dataHeader,
-  } = useContext(PlanetContext);
+  const { filters, setFilters, dataHeader } = useContext(PlanetContext);
 
   const [filterByOrderLocal, setFilterByOrderLocal] = useState({
-    column: '',
-    sort: '',
+    column: 'name',
+    sort: 'ASC',
   });
 
   const handleChange = ({ target }) => {
@@ -24,7 +19,6 @@ function FilterByOrder() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setFilters({
       ...filters,
       order: filterByOrderLocal,
