@@ -11,6 +11,7 @@ function PlanetProvider({ children }) {
       name: '',
     },
     filterByNumericValues: [],
+    order: {},
   });
   const [columnFilter, setColumnFilter] = useState(
     [
@@ -44,7 +45,7 @@ function PlanetProvider({ children }) {
 
   return (
     <PlanetContext.Provider value={ contextValue }>
-      { children }
+      {children}
     </PlanetContext.Provider>
   );
 }
