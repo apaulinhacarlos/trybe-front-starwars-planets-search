@@ -61,7 +61,7 @@ npm start
 
 A tabela deve ser renderizada por um componente chamado `<Table />`. Os dados recebidos da API devem ser salvos num campo chamado `data` do contexto e é daí que a tabela deve lê-los. A requisição deve ser feita num componente separado do componente da tabela.
 
-A API a ser consultada está [nesse link](https://swapi-trybe.herokuapp.com/api/planets/). Ou seja, você deverá fazer um fetch para a URL `https://swapi-trybe.herokuapp.com/api/planets/`
+A API a ser consultada está [nesse link](https://swapi.dev/api/planets). Ou seja, você deverá fazer um fetch para a URL `https://swapi.dev/api/planets`
 
 A tabela deve ter uma primeira linha com os headers e as demais com as informações de cada campo.
 
